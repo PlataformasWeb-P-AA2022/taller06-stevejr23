@@ -19,14 +19,14 @@ class Pais(Base):
     Nombre_pais = Column(String(200))
     Capital = Column(String(200))
     Continent = Column(String(200))
-    Dail = Column(String(200))
+    Dial = Column(String(200))
     Geoname_ID = Column(Integer)
     ITU = Column(String(200))
     Languages = Column(String(200))
     Independiente = Column(String(200))
 
     def __repr__(self):
-        return "Pais: Nombre_pais:%s Capital:%s Continent:%s Dial:%s Geoname_ID%s ITU%s Languages%s Independiente%s" % (
+        return "Pais: Nombre_pais:%s Capital:%s Continent:%s Dial:%s Geoname_ID:%s ITU:%s Languages:%s Independiente:%s" % (
                         self.Nombre_pais,
                         self.Capital,
                         self.Continent,

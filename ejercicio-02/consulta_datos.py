@@ -6,70 +6,31 @@ from sqlalchemy import and_, or_ # se importa el operador and
 # archivo genera_tablas
 from crear_base import Pais
 
-from configuracion import engine
+engine = create_engine('sqlite:///paises.db')
 
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Obtener todos los registros de
-# la entidad docentes
-docentes = session.query(Docente).all() # [docente1, docente2, docente3]
+# Presentar todos los países del continente americano
 
-# Se recorre la lista a través de un ciclo
-# repetitivo for en python
-print("Presentación de todos los Docentes")
-for s in docentes:
-    print("%s" % (s))
-    print("---------")
+paises = session.query(Pais).filter(Pais.Continent.in_(['NA','SA','CA'])).order_by(Pais.Nombre_pais).all()
+print(paises)
 
-# Obtener todos los registros de
-# la tabla docentes que tengan como valor en
-# el atributo especifico
-docentes_dos = session.query(Docente).filter(Docente.ciudad=="Loja").all()
-print(docentes_dos)
+# Presentar los países de Asía, ordenados por el atributo Dial.
 
-print("--------------------------------")
+paises = session.query(Pais).filter(Pais.Continent=="AS").order_by(Pais.Dial).all()
+print(paises)
 
-# Obtener todos los registros de·
-# la tabla Docente ordenados por el atributo especifico
-docentes_tres = session.query(Docente).order_by(Docente.nombre).all()
-print(docentes_tres)
+# Presentar los lenguajes de cada país.
 
+paises = session.query(Pais.Languages).all()
+print(paises)
 
-print("--------------------------------")
-docentes = session.query(Docente).filter(Docente.ciudad=="Loja").order_by(Docente.nombre).all()
-print(docentes)
+# Presentar los países ordenados por la capital, siempre que el país pertenezca a Europa
 
-print("--------------------------------")
-docentes = session.query(Docente).filter(Docente.ciudad!=None).order_by(Docente.nombre).all()
-print(docentes)
+paises = session.query(Pais.Continent=='EU').order_by(Pais.Capital).all()
+print(paises)
 
-print("--------------------------------")
-docentes = session.query(Docente).filter(Docente.ciudad=="Loja", Docente.nombre!=None).order_by(Docente.nombre).all()
-print(docentes)
-
-
-print("--------------------------------")
-docentes = session.query(Docente).filter(Docente.ciudad.like("%oja%"), Docente.nombre!=None).order_by(Docente.nombre).all()
-print(docentes)
-
-
-print("--------------------------------")
-# Uso de and_
-
-docentes = session.query(Docente).filter(and_(Docente.ciudad.like("%oja%"), Docente.nombre!=None)).order_by(Docente.nombre).all()
-print(docentes)
-
-print("--------------------------------")
-# Uso de in_
-
-docentes = session.query(Docente).filter(Docente.apellido.in_(['Minga', 'Borrero'])).order_by(Docente.nombre).all()
-
-print(docentes)
-
-print("--------------------------------")
-# Uso de or_
-
-docentes = session.query(Docente).filter(or_(Docente.apellido=="Minga", Docente.apellido=="García")).order_by(Docente.nombre).all()
-
-print(docentes)
+# Presentar todos los países que tengan en su cadena de nombre de país "uador" o en su cadena de capital "ito".
+paises = session.query(Pais).filter(or_(Pais.Nombre_pais.like("%uador"), Pais.Capital.like("%ito"))).all()
+print(paises)

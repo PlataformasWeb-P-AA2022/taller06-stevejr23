@@ -30,8 +30,15 @@ datos = archivo.json()
 
 for d in datos:
     print(d)
-    #print(len(d.keys()))
-    p = Pais(Nombre_pais = d['CLDR display name'], Capital = d['Capital'], Continent = d['Continent'], Dial = d['Dial'], Geoname_ID = d['Geoname ID'], ITU = d['ITU'], Languages = d['Languages'], Independiente = d['is_independent'])
+    print(len(d.keys()))
+    p = Pais(Nombre_pais = d['CLDR display name'], 
+        Capital = d['Capital'], 
+        Continent = d['Continent'], 
+        Dial = d['Dial'], 
+        Geoname_ID = d['Geoname ID'], 
+        ITU = d['ITU'], 
+        Languages = d['Languages'], 
+        Independiente = d['is_independent'])
     session.add(p)
 
 # confirmar transacciones
